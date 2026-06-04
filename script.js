@@ -1,55 +1,38 @@
-const produkter = [
-  {
-    id: 1,
-    navn: "Nordisk Sofa",
-    kategori: "stue",
-    pris: 7990,
-    ikon: "🛋️",
-    beskrivelse: "Komfortabel sofa med moderne nordisk design.",
-  },
-  {
-    id: 2,
-    navn: "Eik Spisebord",
-    kategori: "spisestue",
-    pris: 5490,
-    ikon: "🍽️",
-    beskrivelse: "Solid spisebord i eik med plass til seks personer.",
-  },
-  {
-    id: 3,
-    navn: "Ergo Kontorstol",
-    kategori: "kontor",
-    pris: 2490,
-    ikon: "🪑",
-    beskrivelse: "Justerbar kontorstol for hjemmekontor.",
-  },
-  {
-    id: 4,
-    navn: "Lun Seng",
-    kategori: "soverom",
-    pris: 8990,
-    ikon: "🛏️",
-    beskrivelse: "Behagelig seng med minimalistisk design.",
-  },
-  {
-    id: 5,
-    navn: "TV-benk Oslo",
-    kategori: "stue",
-    pris: 3290,
-    ikon: "📺",
-    beskrivelse: "Praktisk TV-benk med god lagringsplass.",
-  },
-  {
-    id: 6,
-    navn: "Skrivebord Compact",
-    kategori: "kontor",
-    pris: 1990,
-    ikon: "💻",
-    beskrivelse: "Lite skrivebord som passer godt til små rom.",
-  },
-];
+const supabaseUrl = "https://vkuplcldclmcfcbtdlgf.supabase.co";
+const supabaseKey = "sb_publishable_8e_elINpvMIHGBLTdzzd0g_mzRXXS0K";
 
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let produkter = [];
 const handlekurv = [];
+
+async function hentProdukterFraSupabase() {
+  const productList = document.getElementById("productList");
+
+  productList.innerHTML = "<p>Laster produkter...</p>";
+
+  const { data, error } = await supabaseClient
+    .from("produkter")
+    .select("*")
+    .order("navn", { ascending: true });
+
+  console.log("Supabase data:", data);
+  console.log("Supabase error:", error);
+
+  if (error) {
+    productList.innerHTML = "<p>Kunne ikke hente produkter fra databasen.</p>";
+    console.error("Feil ved henting av produkter:", error);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    productList.innerHTML = "<p>Ingen produkter ligger i databasen.</p>";
+    return;
+  }
+
+  produkter = data;
+  visProdukter();
+}
 
 function visProdukter() {
   const productList = document.getElementById("productList");
@@ -157,18 +140,23 @@ function init() {
   document
     .getElementById("searchInput")
     .addEventListener("input", visProdukter);
+
   document
     .getElementById("categoryFilter")
     .addEventListener("change", visProdukter);
+
   document
     .getElementById("checkoutButton")
     .addEventListener("click", fullforBestilling);
+
   document
     .getElementById("scrollButton")
     .addEventListener("click", scrollTilProdukter);
+
   document.getElementById("productList").addEventListener("click", (event) => {
     const button = event.target.closest("button[data-id]");
     if (!button) return;
+
     const produktId = Number(button.dataset.id);
     leggTilIHandlekurv(produktId);
   });
@@ -181,7 +169,7 @@ function init() {
     fjernFraHandlekurv(index);
   });
 
-  visProdukter();
+  hentProdukterFraSupabase();
   visHandlekurv();
 }
 

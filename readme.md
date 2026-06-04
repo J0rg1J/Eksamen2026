@@ -30,3 +30,5 @@ Målgruppen er personer som ønsker å kjøpe møbler på en enkel og oversiktli
 ## Fokus
 
 Prosjektet skal ha fokus på brukervennlighet, enkel kjøpsflyt og CRO-prinsipper.
+
+supabase database passord: Eksamen26Passord
