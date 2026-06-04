@@ -119,15 +119,67 @@ function fjernFraHandlekurv(index) {
   visHandlekurv();
 }
 
-function fullforBestilling() {
+async function fullforBestilling() {
+  const customerName = document.getElementById("customerName").value.trim();
+  const orderMessage = document.getElementById("orderMessage");
+  const customerEmail = document.getElementById("customerEmail").value.trim();
+  const customerAddress = document
+    .getElementById("customerAddress")
+    .value.trim();
+
   if (handlekurv.length === 0) {
-    alert("Du må legge til minst ett produkt før du kan bestille.");
+    orderMessage.className = "error-message";
+    orderMessage.textContent =
+      "Du må legge til minst ett produkt før du kan bestille.";
     return;
   }
 
-  alert("Bestilling fullført! Senere kan denne lagres i en SQL-database.");
+  if (!customerName || !customerEmail || !customerAddress) {
+    orderMessage.className = "error-message";
+    orderMessage.textContent = "Du må fylle inn navn, e-post og adresse.";
+    return;
+  }
+
+  if (!customerEmail.includes("@")) {
+    orderMessage.className = "error-message";
+    orderMessage.textContent = "Du må skrive inn en gyldig e-postadresse.";
+    return;
+  }
+
+  const total = handlekurv.reduce((sum, produkt) => sum + produkt.pris, 0);
+
+  const orderItems = handlekurv.map((produkt) => {
+    return {
+      id: produkt.id,
+      navn: produkt.navn,
+      pris: produkt.pris,
+    };
+  });
+
+  const { error } = await supabaseClient.from("orders").insert({
+    customer_name: customerName,
+    customer_email: customerEmail,
+    customer_address: customerAddress,
+    total_price: total,
+    items: orderItems,
+  });
+
+  if (error) {
+    console.error("Feil ved lagring av ordre:", error);
+    orderMessage.className = "error-message";
+    orderMessage.textContent = "Bestillingen kunne ikke lagres.";
+    return;
+  }
+
+  orderMessage.className = "success-message";
+  orderMessage.textContent = `Takk for bestillingen, ${customerName}. Ordren er lagret.`;
+
   handlekurv.length = 0;
   visHandlekurv();
+
+  document.getElementById("customerName").value = "";
+  document.getElementById("customerEmail").value = "";
+  document.getElementById("customerAddress").value = "";
 }
 
 function scrollTilProdukter() {

@@ -175,3 +175,37 @@ footer {
   padding: 15px;
   margin-top: 30px;
 }
+
+.checkout-form {
+  margin-top: 20px;
+}
+
+.checkout-form h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.checkout-form label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+#orderMessage {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.success-message {
+  color: green;
+}
+
+.error-message {
+  color: red;
+}

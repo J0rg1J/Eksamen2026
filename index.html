@@ -68,9 +68,33 @@
             <p>Handlekurven er tom.</p>
           </div>
           <p class="cart-total" id="cartTotal">Total: 0 kr</p>
+
+          <div class="checkout-form">
+            <h3>Kundeinformasjon</h3>
+
+            <label for="customerName">Navn</label>
+            <input type="text" id="customerName" placeholder="Skriv inn navn" />
+
+            <label for="customerEmail">E-post</label>
+            <input
+              type="email"
+              id="customerEmail"
+              placeholder="Skriv inn e-post"
+            />
+
+            <label for="customerAddress">Adresse</label>
+            <input
+              type="text"
+              id="customerAddress"
+              placeholder="Skriv inn adresse"
+            />
+          </div>
+
           <button id="checkoutButton" class="checkout-button">
             Fullfør bestilling
           </button>
+
+          <div id="orderMessage"></div>
         </aside>
       </div>
 
