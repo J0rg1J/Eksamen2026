@@ -113,18 +113,27 @@ function visHandlekurv() {
 
   const cartHtml = handlekurv
     .map(
-      (produkt) => `
+      (produkt, index) => `
         <div class="cart-item">
           <span>${produkt.navn}</span>
           <span>${produkt.pris} kr</span>
+          <button type="button" data-index="${index}">
+            Fjern
+          </button>
         </div>
       `,
     )
     .join("");
 
   cartItems.innerHTML = cartHtml;
+
   const total = handlekurv.reduce((sum, produkt) => sum + produkt.pris, 0);
   cartTotal.textContent = `Total: ${total} kr`;
+}
+
+function fjernFraHandlekurv(index) {
+  handlekurv.splice(index, 1);
+  visHandlekurv();
 }
 
 function fullforBestilling() {
@@ -162,6 +171,14 @@ function init() {
     if (!button) return;
     const produktId = Number(button.dataset.id);
     leggTilIHandlekurv(produktId);
+  });
+
+  document.getElementById("cartItems").addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-index]");
+    if (!button) return;
+
+    const index = Number(button.dataset.index);
+    fjernFraHandlekurv(index);
   });
 
   visProdukter();
