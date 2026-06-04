@@ -1,9 +1,98 @@
 <!doctype html>
-<html lang="en">
+<html lang="no">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Møbler Norge</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Møbler Norge</h1>
+
+      <nav>
+        <a href="#">Hjem</a>
+        <a href="#produkter">Produkter</a>
+        <a href="#handlekurv">Handlekurv</a>
+        <a href="#om">Om prosjektet</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h2>Finn møbler som passer hjemmet ditt</h2>
+        <p>
+          Møbler Norge er en enkel nettbutikk for moderne og praktiske møbler.
+          Målet er å gjøre det lett for brukeren å finne riktige produkter
+          raskt.
+        </p>
+        <button id="scrollButton" class="cta-button">Se produkter</button>
+      </div>
+
+      <div class="hero-box">
+        <h3>Hvorfor handle her?</h3>
+        <p>✓ Enkelt produktutvalg</p>
+        <p>✓ Tydelig prisinformasjon</p>
+        <p>✓ Rask handlekurv</p>
+        <p>✓ Mobilvennlig design</p>
+      </div>
+    </section>
+
+    <main>
+      <div class="layout">
+        <section id="produkter">
+          <h2 class="section-title">Produkter</h2>
+
+          <div class="filter-bar">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Søk etter produkt..."
+            />
+
+            <select id="categoryFilter">
+              <option value="alle">Alle kategorier</option>
+              <option value="stue">Stue</option>
+              <option value="soverom">Soverom</option>
+              <option value="kontor">Kontor</option>
+              <option value="spisestue">Spisestue</option>
+            </select>
+          </div>
+
+          <div id="productList" class="products"></div>
+        </section>
+
+        <aside id="handlekurv" class="cart">
+          <h2>Handlekurv</h2>
+          <div id="cartItems">
+            <p>Handlekurven er tom.</p>
+          </div>
+          <p class="cart-total" id="cartTotal">Total: 0 kr</p>
+          <button id="checkoutButton" class="checkout-button">
+            Fullfør bestilling
+          </button>
+        </aside>
+      </div>
+
+      <section id="om" class="info-section">
+        <h2>Om prosjektet</h2>
+        <p>
+          Dette prosjektet er en prototype på en nettbutikk med fokus på
+          brukervennlighet og enkel kjøpsflyt. Brukeren kan søke etter
+          produkter, filtrere etter kategori, legge produkter i handlekurven og
+          simulere en bestilling.
+        </p>
+        <br />
+        <p>
+          Senere kan prosjektet videreutvikles med SQL-database, Java-backend,
+          innlogging, adminpanel og lagring av bestillinger.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Møbler Norge. Skoleprosjekt.</p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
