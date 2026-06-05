@@ -202,6 +202,11 @@ footer {
   font-weight: bold;
 }
 
+#orderMessage {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
 .success-message {
   color: green;
 }
